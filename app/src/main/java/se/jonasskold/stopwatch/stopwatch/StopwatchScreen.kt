@@ -25,7 +25,10 @@ fun StopwatchScreen() {
 
     StopwatchTheme {
         Surface {
-            Column {
+            Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+            ) {
                 Time(time = viewModel.stopwatch.totalAt(viewModel.now))
                 StopwatchButtons(
                         isRunning = viewModel.stopwatch.isRunning,
@@ -43,10 +46,11 @@ fun StopwatchButtons(
         isRunning: Boolean = false,
         onClickResume: () -> Unit = {},
         onClickStop: () -> Unit = {},
-        onClickReset: () -> Unit = {}
+        onClickReset: () -> Unit = {},
+        modifier: Modifier = Modifier
 ) {
     Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -72,7 +76,7 @@ fun StopwatchButtons(
 }
 
 @Composable
-fun Time(time: Long) {
+fun Time(time: Long, modifier: Modifier = Modifier) {
     val hours: String = remember(time) {
         val h = time / 3600000
         if (h == 0L) "" else "$h:"
@@ -87,7 +91,7 @@ fun Time(time: Long) {
         if (ms < 10) "0$ms" else "$ms"
     }
     Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
     ) {
         Text(
