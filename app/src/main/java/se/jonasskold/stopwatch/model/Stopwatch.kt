@@ -26,4 +26,7 @@ data class Stopwatch(
             offset = 0
         )
     }
+
+    val isRunning: Boolean
+        get() = startedAt != null
 }

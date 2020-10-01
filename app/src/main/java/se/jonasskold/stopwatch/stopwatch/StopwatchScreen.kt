@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import se.jonasskold.stopwatch.model.Stopwatch
 import se.jonasskold.stopwatch.ui.StopwatchTheme
 
 @ObsoleteCoroutinesApi
@@ -20,17 +21,29 @@ fun StopwatchScreen() {
         Surface {
             Column {
                 Time(time = viewModel.stopwatch.totalAt(viewModel.now))
-                Button(onClick = { viewModel.resume() } ) {
-                    Text(text = "Resume")
-                }
-                Button(onClick = { viewModel.stop() } ) {
-                    Text(text = "Stop")
-                }
-                Button(onClick = { viewModel.reset() } ) {
-                    Text(text = "Reset")
-                }
+                StopwatchButtons(
+                        stopwatch = viewModel.stopwatch,
+                        onClickResume = { viewModel.resume() },
+                        onClickStop = { viewModel.stop() },
+                        onClickReset = { viewModel.reset() }
+                )
             }
         }
+    }
+}
+
+@Composable
+fun StopwatchButtons(
+        stopwatch: Stopwatch,
+        onClickResume: () -> Unit,
+        onClickStop: () -> Unit,
+        onClickReset: () -> Unit
+) {
+    Button(onClick = if (stopwatch.isRunning) onClickStop else onClickResume) {
+        Text(text = if (!stopwatch.isRunning) "Start" else "Stop")
+    }
+    Button(onClick = onClickReset) {
+        Text(text = "Reset")
     }
 }
 
