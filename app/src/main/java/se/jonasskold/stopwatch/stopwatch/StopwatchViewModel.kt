@@ -46,6 +46,10 @@ class StopwatchViewModel : ViewModel() {
         endTicker()
     }
 
+    fun lap() {
+        stopwatch = stopwatch.lap(now())
+    }
+
     private fun startTicker() {
         if (tickerChannel == null) {
             tickerChannel = ticker(37, 0, viewModelScope.coroutineContext)
