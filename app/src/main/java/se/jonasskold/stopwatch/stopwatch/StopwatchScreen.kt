@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import se.jonasskold.stopwatch.ui.StopwatchTheme
 
+@ObsoleteCoroutinesApi
 @Composable
 fun StopwatchScreen() {
     val viewModel = viewModel<StopwatchViewModel>()
