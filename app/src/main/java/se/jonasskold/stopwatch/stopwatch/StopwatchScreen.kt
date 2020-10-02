@@ -29,18 +29,23 @@ fun StopwatchScreen() {
 
     StopwatchTheme {
         Surface {
-            ScrollableColumn(
+            Column(
                     modifier = Modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Time(
                         time = viewModel.stopwatch.totalAt(viewModel.now),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
                 )
                 Laps(
                         viewModel.stopwatch.laps,
                         viewModel.now,
-                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp)
+                                .weight(2f)
                 )
                 StopwatchButtons(
                         isRunning = viewModel.stopwatch.isRunning,
@@ -64,7 +69,9 @@ fun StopwatchButtons(
         modifier: Modifier = Modifier
 ) {
     Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -111,22 +118,25 @@ fun Time(
     }
     Row(
             modifier = modifier,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-                text = "$hours$minutes$seconds",
-                style = style,
-                modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .alignWithSiblings(FirstBaseline)
-        )
-        Text(
-                text = millis,
-                style = millisStyle,
-                modifier = Modifier
-                        .alignWithSiblings(FirstBaseline)
-        )
-
+        Row(
+                horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                    text = "$hours$minutes$seconds",
+                    style = style,
+                    modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .alignWithSiblings(FirstBaseline)
+            )
+            Text(
+                    text = millis,
+                    style = millisStyle,
+                    modifier = Modifier.alignWithSiblings(FirstBaseline)
+            )
+        }
     }
 }
 
@@ -136,7 +146,7 @@ fun Laps(
         now: Long,
         modifier: Modifier = Modifier
 ) {
-    Column(
+    ScrollableColumn(
             modifier = modifier
     ) {
         Text(text = "Laps", modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -173,7 +183,7 @@ fun preview() {
     StopwatchTheme {
         Surface {
             Column {
-                Time(time = 83450)
+                Time(time = 83450, modifier = Modifier.fillMaxWidth())
                 StopwatchButtons()
             }
         }
